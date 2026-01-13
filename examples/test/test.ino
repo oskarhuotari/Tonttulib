@@ -16,6 +16,12 @@ void setup() {
 }
 
 void loop() {
+    float temp = tonttu.readTemperature();
+    float ldrV = tonttu.readLDRVoltage();
+
+    Serial.print("Temperature: "); Serial.print(temp, 2); Serial.println(" °C");
+    Serial.print("LDR Voltage: "); Serial.print(ldrV, 2); Serial.println(" V");
+
     // --- BMP388 barometer ---
     float pressure = tonttu.baro.readPressure();
     Serial.print("Pressure: "); Serial.print(pressure); Serial.println(" Pa");
