@@ -15,26 +15,31 @@
 #include "sensors/IMU.h"
 #include "sensors/Flash.h"
 
+#include "LED.h"
+
 class Tonttulib
 {
 public:
-    Tonttulib();
+  Tonttulib();
 
-    // Initialize all sensors
-    // Returns 1 if successful, -1 if baro fails, -2 if IMU fails, -3 if flash fails
-    int init(TwoWire &wire = Wire, SPIClass &spi = SPI);
+  // Initialize all sensors
+  // Returns 1 if successful, -1 if baro fails, -2 if IMU fails, -3 if flash fails
+  int init(TwoWire &wire = Wire, SPIClass &spi = SPI);
 
-    float readTemperature();  // reads thermistor
-    float readLDRVoltage();   // reads LDR voltage (0-3.3V)
+  float readTemperature(); // reads thermistor
+  float readLDRVoltage();  // reads LDR voltage (0-3.3V)
 
-    // Sensors
-    BMP388 baro;
-    IMU imu;
-    Flash flash;
+  void update();
+
+  // Sensors
+  BMP388 baro;
+  IMU imu;
+  Flash flash;
+  Led led;
 
 private:
-    TwoWire* _i2c;
-    SPIClass* _spi;
+  TwoWire *_i2c;
+  SPIClass *_spi;
 };
 
 #endif

@@ -1,4 +1,4 @@
--LED code
+-Teensy 4.0 eeprom
 -error flags
--thermistor and LDR
+-thermistor calibration and circuit math
 -data transmission? gps?

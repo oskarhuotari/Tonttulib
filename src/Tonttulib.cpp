@@ -6,10 +6,10 @@
 
 #include "Arduino.h"
 #include "Tonttulib.h"
-#include <math.h>  // for pow()
+#include <math.h>
 
 Tonttulib::Tonttulib()
-    : baro(), imu(), flash() {}
+    : baro(), imu(), flash(), led() {}
 
 //  1  = success
 // -1  = baro init failed
@@ -27,46 +27,53 @@ int Tonttulib::init(TwoWire &wire, SPIClass &spi)
     _spi->begin();
 
     // Initialize BMP388
-    if (!baro.init(*_i2c)) {
+    if (!baro.init(*_i2c))
+    {
         return -1;
     }
 
     // Initialize IMU
-    if (!imu.init(*_spi)) {
+    if (!imu.init(*_spi))
+    {
         return -2;
     }
 
     // Initialize Flash
-    if (!flash.begin()) {
+    if (!flash.begin())
+    {
         return -3;
     }
 
     return 1;
 }
 
-// --- Temperature calculation ---  
-float Tonttulib::readTemperature() {
-    float Vout = (analogRead(A1)/1023.0f) * 3.3f;
+// --- Temperature calculation ---
+float Tonttulib::readTemperature()
+{
+    float Vout = (analogRead(A1) / 1023.0f) * 3.3f;
     float Vcc = 3.3f;
     float Rseries = 10000.0f;
 
-    // Thermistor is on the bottom now
     float R = Rseries * (Vcc - Vout) / Vout;
 
     float T0 = 298.15f;
     float R0 = 10000.0f;
     float beta = 3950.0f;
 
-    float tempK = 1.0f / (1.0f/T0 + log(R/R0)/beta);
+    float tempK = 1.0f / (1.0f / T0 + log(R / R0) / beta);
     return tempK - 273.15f;
 }
 
-
-
 // --- LDR voltage calculation ---
-float Tonttulib::readLDRVoltage() {
+float Tonttulib::readLDRVoltage()
+{
     int raw = analogRead(A0);
 
     float voltage = (raw / 1023.0f) * 3.3f;
     return voltage;
+}
+
+void Tonttulib::update()
+{
+    led.update();
 }
