@@ -12,7 +12,7 @@ void Motors::begin(const uint8_t pins[4])
 // index: 1-4
 void Motors::set(uint8_t index, uint16_t us)
 {
-  if (index >= 4)
+  if (index >= 5)
     return;
   us = constrain(us, 1000, 2000);
   _motors[index - 1].writeMicroseconds(us);

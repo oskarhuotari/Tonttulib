@@ -1,7 +1,6 @@
 # Tonttulib
 
-**Tonttulib** is a custom Arduino/Teensy library for **Tonttuboard**, a PCB designed for the Finnish CanSat 2026 competition.  
-It provides easy access to the board’s sensors, actuators, and storage devices with a clean interface.
+**Tonttulib** is a custom Arduino/Teensy library for **Tonttuboard**, a PCB designed for the Finnish CanSat 2026 competition. It provides easy access to the board’s sensors, actuators, and storage devices with a clean interface.
 
 ---
 
@@ -42,7 +41,7 @@ It provides easy access to the board’s sensors, actuators, and storage devices
 
 ---
 ## PCB design
-- 4 layer PCB that's designed to turn teensy 4.0 into a full fledged custom flight controller
+- 4 layer PCB that's designed to turn Teensy 4.0 into a full fledged custom flight controller
 - For more info see, [PCB Repository](https://github.com/hasorez/Tonttuboard-PCB)
 
 ---

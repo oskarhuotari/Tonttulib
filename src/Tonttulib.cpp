@@ -7,7 +7,7 @@
 #include "Tonttulib.h"
 
 Tonttulib::Tonttulib()
-    : baro(), imu(), thermistor(), ldr(), motors(), led(), flash()
+    : baro(), imu(), thermistor(), ldr(), motors(), led(), flash(), gps()
 {
 }
 
@@ -19,6 +19,9 @@ int Tonttulib::init(TwoWire &wire, SPIClass &spi)
     _i2c->begin();
     _i2c->setClock(400000);
     _spi->begin();
+
+    Serial2.begin(9600);
+    gps.init(Serial2);
 
     if (!baro.init(*_i2c))
         return -1;
@@ -45,4 +48,5 @@ int Tonttulib::init(TwoWire &wire, SPIClass &spi)
 void Tonttulib::update()
 {
     led.update();
+    gps.update();
 }

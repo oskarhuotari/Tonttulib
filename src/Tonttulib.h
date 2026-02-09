@@ -16,6 +16,7 @@
 #include "sensors/IMU.h"
 #include "sensors/Thermistor.h"
 #include "sensors/LDR.h"
+#include "sensors/GPS.h"
 
 // Actuators
 #include "actuators/LED.h"
@@ -40,6 +41,7 @@ public:
   Motors motors;
   Led led;
   Flash flash;
+  GPS gps;
 
 private:
   TwoWire *_i2c;
