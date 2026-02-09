@@ -1,4 +1,5 @@
--Teensy 4.0 eeprom
+-Teensy 4.0 eeprom control
 -error flags
--thermistor calibration
--data transmission? gps?
+-lipo battery charge measurement
+
+-data transmission?

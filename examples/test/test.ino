@@ -78,8 +78,7 @@ void loop() {
         Serial.print(" Alt: ");
         Serial.println(tLib.gps.altitude(), 2);
         tLib.gps.clearNewData();
-}
-
+    }
 
     // // --- Motors ---
     tLib.motors.set(1, 1200);
