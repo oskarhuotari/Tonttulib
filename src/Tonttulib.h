@@ -24,6 +24,7 @@
 
 // Storage
 #include "storage/Flash.h"
+#include "storage/EEPROM.h"
 
 class Tonttulib
 {
@@ -33,6 +34,38 @@ public:
   int init(TwoWire &wire = Wire, SPIClass &spi = SPI);
   void update();
 
+  enum FlightState : uint8_t
+  {
+    STATE_PRELAUNCH = 0,
+    STATE_INSIDE_ROCKET,
+    STATE_DEPLOYMENT,
+    STATE_FREEFALL,
+    STATE_POWERED,
+    STATE_LANDED
+  };
+
+  // Convert enum to string
+  static const char *flightStateToString(FlightState state)
+  {
+    switch (state)
+    {
+    case STATE_PRELAUNCH:
+      return "PRELAUNCH";
+    case STATE_INSIDE_ROCKET:
+      return "INSIDE_ROCKET";
+    case STATE_DEPLOYMENT:
+      return "DEPLOYMENT";
+    case STATE_FREEFALL:
+      return "FREEFALL";
+    case STATE_POWERED:
+      return "POWERED";
+    case STATE_LANDED:
+      return "LANDED";
+    default:
+      return "UNKNOWN";
+    }
+  }
+
   // Modules
   BMP388 baro;
   IMU imu;
@@ -41,6 +74,7 @@ public:
   Motors motors;
   Led led;
   Flash flash;
+  EEPROMStorage eeprom;
   GPS gps;
 
 private:

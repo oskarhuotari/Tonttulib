@@ -18,6 +18,19 @@ void setup() {
     Serial.println("Motors armed (1000 us).");
 
     delay(10000);
+
+    uint32_t lastAddr;
+    uint8_t gen, seq;
+    if (tLib.eeprom.readLatestFlashAddress(lastAddr, gen, seq)) {
+        Serial.print(F("Recovered last flash address: 0x"));
+        Serial.println(lastAddr, HEX);
+        Serial.print(F("generation="));
+        Serial.print(gen);
+        Serial.print(F(" sequence="));
+        Serial.println(seq);
+    } else {
+        Serial.println(F("No valid flash log found"));
+    }
 }
 
 void loop() {
@@ -59,11 +72,13 @@ void loop() {
     Serial.println(gz);
 
     // // --- Flash ---
-    // uint8_t buffer[256];
-    // if (tLib.flash.readPage(100, buffer)) {
-    //     Serial.print("First byte of flash page 0: 0x");
-    //     Serial.println(buffer[0], HEX);
-    // }
+    uint8_t buffer[256];
+    if (tLib.flash.readPage(100, buffer)) {
+        Serial.print("First byte of flash page 0: 0x");
+        Serial.println(buffer[0], HEX);
+    } else {
+        Serial.println("Failed to read flash page");
+    }
 
     // --- GPS ---
     tLib.update();
@@ -85,6 +100,15 @@ void loop() {
     tLib.motors.set(2, 1200);
     tLib.motors.set(3, 1200);
     tLib.motors.set(4, 1200);
+
+    // Read flight state from EEPROM
+    Tonttulib::FlightState state = static_cast<Tonttulib::FlightState>(
+        tLib.eeprom.readFlightState()
+    );
+
+    // Print human-readable name
+    Serial.print("Flight state: ");
+    Serial.println(tLib.flightStateToString(state));
 
     // // Must be called every loop
     tLib.update();
