@@ -8,5 +8,5 @@ void LDR::begin(uint8_t pin)
 
 float LDR::readVoltage()
 {
-  return (analogRead(_pin) / ADC_MAX) * VCC;
+  return (analogRead(_pin) / THERM_ADC_MAX) * THERM_VCC;
 }

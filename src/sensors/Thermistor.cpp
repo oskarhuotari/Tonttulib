@@ -26,11 +26,11 @@ void Thermistor::begin(uint8_t pin)
  */
 float Thermistor::readCelsius()
 {
-  float v = (analogRead(_pin) / ADC_MAX) * VCC;
+  float v = (analogRead(_pin) / THERM_ADC_MAX) * THERM_VCC;
   if (v <= 0.001f)
     return NAN;
 
-  float r = R2 * (VCC - v) / v;
-  float tK = 1.0f / (1.0f / T0 + log(r / R0) / BETA);
+  float r = THERM_R2 * (THERM_VCC - v) / v;
+  float tK = 1.0f / (1.0f / THERM_T0 + log(r / THERM_R0) / THERM_BETA);
   return tK - 273.15f;
 }
