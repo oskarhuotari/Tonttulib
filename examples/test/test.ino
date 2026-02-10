@@ -110,6 +110,16 @@ void loop() {
     Serial.print("Flight state: ");
     Serial.println(tLib.flightStateToString(state));
 
+    float v = tLib.vlipo.readVoltage();
+    uint8_t pct = tLib.vlipo.readPercentage();
+
+    Serial.print("LiPo: ");
+    Serial.print(v);
+    Serial.print(" V / ");
+    Serial.print(pct);
+    Serial.println(" %");
+
+
     // // Must be called every loop
     tLib.update();
 

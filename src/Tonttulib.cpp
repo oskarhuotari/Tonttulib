@@ -7,7 +7,7 @@
 #include "Tonttulib.h"
 
 Tonttulib::Tonttulib()
-    : baro(), imu(), thermistor(), ldr(), motors(), led(), flash(), eeprom(), gps()
+    : baro(), imu(), thermistor(), ldr(), motors(), led(), flash(), eeprom(), gps(), vlipo()
 {
 }
 
@@ -34,6 +34,7 @@ int Tonttulib::init(TwoWire &wire, SPIClass &spi)
 
     thermistor.begin(PIN_THERMISTOR);
     ldr.begin(PIN_LDR);
+    vlipo.begin(LIPO_ADC_PIN);
 
     const uint8_t motorPins[4] = {
         MOTOR_1_PIN,

@@ -17,6 +17,7 @@
 #include "sensors/Thermistor.h"
 #include "sensors/LDR.h"
 #include "sensors/GPS.h"
+#include "sensors/VLiPo.h"
 
 // Actuators
 #include "actuators/LED.h"
@@ -76,6 +77,7 @@ public:
   Flash flash;
   EEPROMStorage eeprom;
   GPS gps;
+  VLiPo vlipo;
 
 private:
   TwoWire *_i2c;
