@@ -15,6 +15,7 @@
 | **Thermistor** | Read temperature in °C: `tLib.thermistor.readCelsius()` |
 | **LDR** | Read light voltage (0–3.3V): `tLib.ldr.readVoltage()` |
 | **GPS (UBX NAV-PVT)** | Non-blocking parsing of latitude, longitude, altitude, fix type, satellites, heading. <br>Usage: <br>`tLib.gps.update()` (called automatically in `tLib.update()`) <br>`if (tLib.gps.hasNewData()) { ... }` <br>`tLib.gps.clearNewData()` to reset the flag |
+| **VLiPo** | Read battery voltage (V): `tLib.vlipo.readVoltage()` <br>Read battery charge percentage (0–100%): `tLib.vlipo.readPercentage()` |
 
 ### Actuators
 

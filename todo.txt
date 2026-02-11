@@ -1,6 +1,5 @@
--Teensy 4.0 eeprom control
--error flags
--lipo battery charge measurement
 -flash chip data to computer function (and a computer program that writes it to a csv)
+-docs
 
 -data transmission?
+-error flags?

@@ -11,7 +11,7 @@ void VLiPo::begin(uint8_t pin)
 float VLiPo::readVoltage()
 {
   float adc = analogRead(_pin);                              // raw ADC 0..1023
-  float v_adc = adc / THERM_ADC_MAX * THERM_VCC;             // voltage at ADC pin
+  float v_adc = (adc / THERM_ADC_MAX) * THERM_VCC;           // voltage at ADC pin
   float v_lipo = v_adc * (1.0f + LIPO_DIV_R1 / LIPO_DIV_R2); // scale back to battery
   return v_lipo;
 }

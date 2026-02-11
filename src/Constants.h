@@ -29,6 +29,6 @@
 // Battery / voltage divider for 2S LiPo
 #define LIPO_DIV_R1 18000.0f // top resistor to battery +
 #define LIPO_DIV_R2 10000.0f // bottom resistor to GND
-#define LIPO_ADC_PIN A8      // analog pin used for battery measurement
+#define LIPO_ADC_PIN 22      // analog pin used for battery measurement
 #define LIPO_MIN_V 6.6f      // 0% battery
 #define LIPO_MAX_V 8.4f      // 100% battery
