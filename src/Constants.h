@@ -6,10 +6,10 @@
 #define PIN_LDR A0
 
 // Motor pins
-#define MOTOR_1_PIN 2
-#define MOTOR_2_PIN 3
-#define MOTOR_3_PIN 6
-#define MOTOR_4_PIN 5
+#define MOTOR_1_PIN 3 // +X
+#define MOTOR_2_PIN 2 // eteenpäi +Y
+#define MOTOR_3_PIN 6 // oike ylä - 6 pin
+#define MOTOR_4_PIN 5 // oike ala - 5 pn
 
 // Thermistor constants (safe names)
 #define THERM_VCC 3.3f

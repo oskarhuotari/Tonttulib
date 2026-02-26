@@ -65,13 +65,13 @@ bool IMU::init(SPIClass &spi)
         return false;
 
     // Set default ranges
-    _accSensitivity = 4096.0f;    // ±8g
-    _gyroSensitivity = 32.8f;     // ±1000 dps
+    _accSensitivity = 4096.0f; // ±8g
+    _gyroSensitivity = 32.8f;  // ±1000 dps
 
     // enable gyro + accel
     _modifyRegister(0x4E, 0b00101111, 0b00001111);
-    _modifyRegister(0x4F, 0b11101111, 0b00100110);  // gyro 1000dps
-    _modifyRegister(0x50, 0b11101111, 0b01000110);  // accel ±8g
+    _modifyRegister(0x4F, 0b11101111, 0b00100110); // gyro 1000dps
+    _modifyRegister(0x50, 0b11101111, 0b01000110); // accel ±8g
 
     delay(20);
     return true;
@@ -89,16 +89,16 @@ void IMU::readAccel(float &x, float &y, float &z)
 {
     uint8_t buf[6];
     _spiReadBytes(0x1F, buf, 6);
-    x = ((int16_t)(buf[0] << 8 | buf[1])) / _accSensitivity;
-    y = ((int16_t)(buf[2] << 8 | buf[3])) / _accSensitivity;
-    z = ((int16_t)(buf[4] << 8 | buf[5])) / _accSensitivity;
+    z = -((int16_t)(buf[0] << 8 | buf[1])) / _accSensitivity;
+    y = -((int16_t)(buf[2] << 8 | buf[3])) / _accSensitivity;
+    x = ((int16_t)(buf[4] << 8 | buf[5])) / _accSensitivity;
 }
 
 void IMU::readGyro(float &x, float &y, float &z)
 {
     uint8_t buf[6];
     _spiReadBytes(0x25, buf, 6);
-    x = ((int16_t)(buf[0] << 8 | buf[1])) / _gyroSensitivity;
-    y = ((int16_t)(buf[2] << 8 | buf[3])) / _gyroSensitivity;
-    z = ((int16_t)(buf[4] << 8 | buf[5])) / _gyroSensitivity;
+    z = -((int16_t)(buf[0] << 8 | buf[1])) / _gyroSensitivity;
+    y = -((int16_t)(buf[2] << 8 | buf[3])) / _gyroSensitivity;
+    x = ((int16_t)(buf[4] << 8 | buf[5])) / _gyroSensitivity;
 }
