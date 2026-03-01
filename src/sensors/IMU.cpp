@@ -90,8 +90,8 @@ void IMU::readAccel(float &x, float &y, float &z)
     uint8_t buf[6];
     _spiReadBytes(0x1F, buf, 6);
     z = -((int16_t)(buf[0] << 8 | buf[1])) / _accSensitivity;
-    y = -((int16_t)(buf[2] << 8 | buf[3])) / _accSensitivity;
-    x = ((int16_t)(buf[4] << 8 | buf[5])) / _accSensitivity;
+    x = -((int16_t)(buf[2] << 8 | buf[3])) / _accSensitivity;
+    y = -((int16_t)(buf[4] << 8 | buf[5])) / _accSensitivity;
 }
 
 void IMU::readGyro(float &x, float &y, float &z)
@@ -99,6 +99,6 @@ void IMU::readGyro(float &x, float &y, float &z)
     uint8_t buf[6];
     _spiReadBytes(0x25, buf, 6);
     z = -((int16_t)(buf[0] << 8 | buf[1])) / _gyroSensitivity;
-    y = -((int16_t)(buf[2] << 8 | buf[3])) / _gyroSensitivity;
-    x = ((int16_t)(buf[4] << 8 | buf[5])) / _gyroSensitivity;
+    x = -((int16_t)(buf[2] << 8 | buf[3])) / _gyroSensitivity;
+    y = -((int16_t)(buf[4] << 8 | buf[5])) / _gyroSensitivity;
 }

@@ -96,10 +96,10 @@ void loop() {
     }
 
     // // --- Motors ---
-    // tLib.motors.set(1, 1200);
-    // tLib.motors.set(2, 1200);
-    // tLib.motors.set(3, 1200);
-    // tLib.motors.set(4, 1200);
+    tLib.motors.set(1, 1200);
+    tLib.motors.set(2, 1200);
+    tLib.motors.set(3, 1200);
+    tLib.motors.set(4, 1200);
 
     // Read flight state from EEPROM
     Tonttulib::FlightState state = static_cast<Tonttulib::FlightState>(
