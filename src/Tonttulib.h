@@ -37,12 +37,12 @@ public:
 
   enum FlightState : uint8_t
   {
-    STATE_PRELAUNCH = 0,
-    STATE_INSIDE_ROCKET,
-    STATE_DEPLOYMENT,
-    STATE_FREEFALL,
-    STATE_POWERED,
-    STATE_LANDED
+    PRELAUNCH = 0,
+    INSIDE_ROCKET,
+    DEPLOYMENT,
+    FREEFALL,
+    POWERED,
+    LANDED
   };
 
   // Convert enum to string
@@ -50,17 +50,17 @@ public:
   {
     switch (state)
     {
-    case STATE_PRELAUNCH:
+    case PRELAUNCH:
       return "PRELAUNCH";
-    case STATE_INSIDE_ROCKET:
+    case INSIDE_ROCKET:
       return "INSIDE_ROCKET";
-    case STATE_DEPLOYMENT:
+    case DEPLOYMENT:
       return "DEPLOYMENT";
-    case STATE_FREEFALL:
+    case FREEFALL:
       return "FREEFALL";
-    case STATE_POWERED:
+    case POWERED:
       return "POWERED";
-    case STATE_LANDED:
+    case LANDED:
       return "LANDED";
     default:
       return "UNKNOWN";
