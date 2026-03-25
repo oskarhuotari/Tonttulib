@@ -13,12 +13,13 @@ class IMU
 public:
   IMU();
 
-  bool init(SPIClass &spi);       // initialize IMU, pass SPI bus
-  bool works();                    // WHO_AM_I check
+  bool init(SPIClass &spi); // initialize IMU, pass SPI bus
+  bool works();             // WHO_AM_I check
 
-  float readTemperature();         // temperature in °C
+  float readTemperature();                      // temperature in °C
   void readAccel(float &x, float &y, float &z); // g
   void readGyro(float &x, float &y, float &z);  // deg/s
+  void readAll(float &ax, float &ay, float &az, float &gx, float &gy, float &gz);
 
 private:
   SPIClass *_spi;

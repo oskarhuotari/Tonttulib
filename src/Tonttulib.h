@@ -35,38 +35,6 @@ public:
   int init(TwoWire &wire = Wire, SPIClass &spi = SPI);
   void update();
 
-  enum FlightState : uint8_t
-  {
-    PRELAUNCH = 0,
-    INSIDE_ROCKET,
-    DEPLOYMENT,
-    FREEFALL,
-    POWERED,
-    LANDED
-  };
-
-  // Convert enum to string
-  static const char *flightStateToString(FlightState state)
-  {
-    switch (state)
-    {
-    case PRELAUNCH:
-      return "PRELAUNCH";
-    case INSIDE_ROCKET:
-      return "INSIDE_ROCKET";
-    case DEPLOYMENT:
-      return "DEPLOYMENT";
-    case FREEFALL:
-      return "FREEFALL";
-    case POWERED:
-      return "POWERED";
-    case LANDED:
-      return "LANDED";
-    default:
-      return "UNKNOWN";
-    }
-  }
-
   // Modules
   BMP388 baro;
   IMU imu;

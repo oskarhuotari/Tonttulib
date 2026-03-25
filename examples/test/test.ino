@@ -96,19 +96,19 @@ void loop() {
     }
 
     // // --- Motors ---
-    tLib.motors.set(1, 1200);
-    tLib.motors.set(2, 1200);
-    tLib.motors.set(3, 1200);
-    tLib.motors.set(4, 1200);
+    tLib.motors.set(1, 1000);
+    tLib.motors.set(2, 1000);
+    tLib.motors.set(3, 1000);
+    tLib.motors.set(4, 1000);
 
     // Read flight state from EEPROM
-    Tonttulib::FlightState state = static_cast<Tonttulib::FlightState>(
-        tLib.eeprom.readFlightState()
-    );
+    // Tonttulib::FlightState state = static_cast<Tonttulib::FlightState>(
+    //     tLib.eeprom.readFlightState()
+    // );
 
-    // Print human-readable name
-    Serial.print("Flight state: ");
-    Serial.println(tLib.flightStateToString(state));
+    // // Print human-readable name
+    // Serial.print("Flight state: ");
+    // Serial.println(tLib.flightStateToString(state));
 
     float v = tLib.vlipo.readVoltage();
     uint8_t pct = tLib.vlipo.readPercentage();

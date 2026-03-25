@@ -2,7 +2,7 @@
 
 IMU::IMU()
     : _spi(nullptr),
-      _spiSettings(1000000, MSBFIRST, SPI_MODE0),
+      _spiSettings(12000000, MSBFIRST, SPI_MODE0),
       _accSensitivity(4096.0f),
       _gyroSensitivity(32.8f)
 {
@@ -64,16 +64,21 @@ bool IMU::init(SPIClass &spi)
     if (!works())
         return false;
 
-    // Set default ranges
     _accSensitivity = 4096.0f; // ±8g
     _gyroSensitivity = 32.8f;  // ±1000 dps
 
-    // enable gyro + accel
-    _modifyRegister(0x4E, 0b00101111, 0b00001111);
-    _modifyRegister(0x4F, 0b11101111, 0b00100110); // gyro 1000dps
-    _modifyRegister(0x50, 0b11101111, 0b01000110); // accel ±8g
+    // Enable gyro + accel, set ODR and ranges
+    _modifyRegister(0x4E, 0b00101111, 0b00001111); // gyro 4kHz, accel 2kHz
+    _modifyRegister(0x4F, 0b11101111, 0b00100100); // gyro ±1000 dps
+    _modifyRegister(0x50, 0b11101111, 0b01000101); // accel ±8g
 
-    delay(20);
+    // // GYRO_CONFIG1: 2nd order UI filter (bits 3:2), 3rd order DEC2_M2 (bits 1:0)
+    _modifyRegister(0x51, 0b00001111, 0b00000110);
+
+    // // GYRO_ACCEL_CONFIG0: accel LPF setting ODR/40 (bits 7:4), gyro LPF ODR/40 (bits 3:0)
+    _modifyRegister(0x52, 0b11111111, 0b01110111);
+
+    delay(50);
     return true;
 }
 
@@ -101,4 +106,17 @@ void IMU::readGyro(float &x, float &y, float &z)
     z = -((int16_t)(buf[0] << 8 | buf[1])) / _gyroSensitivity;
     x = -((int16_t)(buf[2] << 8 | buf[3])) / _gyroSensitivity;
     y = -((int16_t)(buf[4] << 8 | buf[5])) / _gyroSensitivity;
+}
+
+void IMU::readAll(float &ax, float &ay, float &az, float &gx, float &gy, float &gz)
+{
+    uint8_t buf[12];
+    // Read accel + gyro in one burst
+    _spiReadBytes(0x1F, buf, 12);
+    az = -((int16_t)(buf[0] << 8 | buf[1])) / _accSensitivity;
+    ax = -((int16_t)(buf[2] << 8 | buf[3])) / _accSensitivity;
+    ay = -((int16_t)(buf[4] << 8 | buf[5])) / _accSensitivity;
+    gz = -((int16_t)(buf[6] << 8 | buf[7])) / _gyroSensitivity;
+    gx = -((int16_t)(buf[8] << 8 | buf[9])) / _gyroSensitivity;
+    gy = -((int16_t)(buf[10] << 8 | buf[11])) / _gyroSensitivity;
 }

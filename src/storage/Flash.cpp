@@ -4,7 +4,7 @@ constexpr uint16_t PAGE_SIZE = 256;
 constexpr uint16_t PAGES_PER_SECTOR = 4096 / PAGE_SIZE;
 
 Flash::Flash(uint8_t csPin, SPIClass &spiBus)
-    : _csPin(csPin), _spi(&spiBus), _spiSettings(10000000, MSBFIRST, SPI_MODE0)
+    : _csPin(csPin), _spi(&spiBus), _spiSettings(12000000, MSBFIRST, SPI_MODE0)
 {
 }
 
@@ -22,7 +22,8 @@ void Flash::_select() { digitalWrite(_csPin, LOW); }
 void Flash::_deselect() { digitalWrite(_csPin, HIGH); }
 
 // === Status registers ===
-uint8_t Flash::readStatusReg1() {
+uint8_t Flash::readStatusReg1()
+{
     uint8_t status;
     _spi->beginTransaction(_spiSettings);
     _select();
@@ -33,7 +34,8 @@ uint8_t Flash::readStatusReg1() {
     return status;
 }
 
-uint8_t Flash::readStatusReg2() {
+uint8_t Flash::readStatusReg2()
+{
     uint8_t status;
     _spi->beginTransaction(_spiSettings);
     _select();
@@ -44,7 +46,8 @@ uint8_t Flash::readStatusReg2() {
     return status;
 }
 
-uint8_t Flash::readStatusReg3() {
+uint8_t Flash::readStatusReg3()
+{
     uint8_t status;
     _spi->beginTransaction(_spiSettings);
     _select();
@@ -59,8 +62,10 @@ bool Flash::readBusyBit() { return readStatusReg1() & 0x01; }
 bool Flash::readWriteEnableBit() { return readStatusReg1() & 0x02; }
 bool Flash::read4ByteAddressModeBit() { return readStatusReg3() & 0x01; }
 
-bool Flash::enter4ByteAddressingMode() {
-    if (readBusyBit()) return false;
+bool Flash::enter4ByteAddressingMode()
+{
+    if (readBusyBit())
+        return false;
     _spi->beginTransaction(_spiSettings);
     _select();
     _spi->transfer(0xB7);
@@ -69,8 +74,10 @@ bool Flash::enter4ByteAddressingMode() {
     return read4ByteAddressModeBit();
 }
 
-bool Flash::writeEnable() {
-    if (readBusyBit()) return false;
+bool Flash::writeEnable()
+{
+    if (readBusyBit())
+        return false;
     _spi->beginTransaction(_spiSettings);
     _select();
     _spi->transfer(0x06);
@@ -79,8 +86,10 @@ bool Flash::writeEnable() {
     return readWriteEnableBit();
 }
 
-uint8_t Flash::readDeviceID() {
-    if (readBusyBit()) return 0;
+uint8_t Flash::readDeviceID()
+{
+    if (readBusyBit())
+        return 0;
     uint8_t deviceID;
     _spi->beginTransaction(_spiSettings);
     _select();
@@ -97,8 +106,10 @@ uint8_t Flash::readDeviceID() {
 bool Flash::works() { return readDeviceID() == 0x18; }
 
 // === Memory operations ===
-bool Flash::readMemory(uint32_t address, uint16_t length, uint8_t* buffer) {
-    if (readBusyBit()) return false;
+bool Flash::readMemory(uint32_t address, uint16_t length, uint8_t *buffer)
+{
+    if (readBusyBit())
+        return false;
     _spi->beginTransaction(_spiSettings);
     _select();
     _spi->transfer(0x13);
@@ -113,13 +124,16 @@ bool Flash::readMemory(uint32_t address, uint16_t length, uint8_t* buffer) {
     return true;
 }
 
-bool Flash::readPage(uint32_t pageNumber, uint8_t* buffer) {
+bool Flash::readPage(uint32_t pageNumber, uint8_t *buffer)
+{
     return readMemory(pageNumber * PAGE_SIZE, PAGE_SIZE, buffer);
 }
 
-bool Flash::writePage(uint32_t pageNumber, const uint8_t* buffer) {
+bool Flash::writePage(uint32_t pageNumber, const uint8_t *buffer)
+{
     uint32_t address = pageNumber * PAGE_SIZE;
-    if (readBusyBit() || !readWriteEnableBit()) return false;
+    if (readBusyBit() || !readWriteEnableBit())
+        return false;
 
     _spi->beginTransaction(_spiSettings);
     _select();
@@ -135,13 +149,16 @@ bool Flash::writePage(uint32_t pageNumber, const uint8_t* buffer) {
     return true;
 }
 
-uint32_t Flash::sectorNumberFromPage(uint32_t pageNumber) {
+uint32_t Flash::sectorNumberFromPage(uint32_t pageNumber)
+{
     return pageNumber / PAGES_PER_SECTOR;
 }
 
-bool Flash::sectorErase(uint32_t sectorNumber) {
+bool Flash::sectorErase(uint32_t sectorNumber)
+{
     uint32_t address = sectorNumber * 4096;
-    if (readBusyBit() || !readWriteEnableBit()) return false;
+    if (readBusyBit() || !readWriteEnableBit())
+        return false;
 
     _spi->beginTransaction(_spiSettings);
     _select();
@@ -155,10 +172,13 @@ bool Flash::sectorErase(uint32_t sectorNumber) {
     return true;
 }
 
-bool Flash::eraseUpToPage(uint32_t pageNumber) {
-    if (readBusyBit() || !readWriteEnableBit()) return false;
+bool Flash::eraseUpToPage(uint32_t pageNumber)
+{
+    if (readBusyBit() || !readWriteEnableBit())
+        return false;
     uint32_t lastSector = sectorNumberFromPage(pageNumber);
     for (uint32_t s = 0; s <= lastSector; s++)
-        if (!sectorErase(s)) return false;
+        if (!sectorErase(s))
+            return false;
     return true;
 }
