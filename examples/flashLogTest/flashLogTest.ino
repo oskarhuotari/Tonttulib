@@ -57,6 +57,9 @@ struct TelemetryRecord
     uint16_t vbat_mV;
 
     uint8_t reserved[28];
+    // pid arvot
+    // kulmat
+    //state
 };
 #pragma pack(pop)
 

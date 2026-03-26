@@ -21,10 +21,13 @@
 
 // EEPROM constants
 #define EEPROM_SIZE_BYTES 1080
-#define EEPROM_STATE_ADDR 0
-#define EEPROM_LOG_START 1
-#define EEPROM_MAX_ENTRIES 120 // <128 for wrap-safe logic
+#define EEPROM_MAX_ENTRIES 120
 #define EEPROM_VALID_MARKER 0x42
+#define EEPROM_STATE_ADDR 0
+#define EEPROM_LAT0_ADDR 1
+#define EEPROM_LON0_ADDR 5
+#define EEPROM_P0_ADDR 9
+#define EEPROM_LOG_START 13
 
 // Battery / voltage divider for 2S LiPo
 #define LIPO_DIV_R1 18000.0f // top resistor to battery +
